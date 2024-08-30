@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scoreboard</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <style>
+    .gold {
+      background-color: gold;
+      color: black;
+    }
+
+    .silver {
+      background-color: silver;
+    }
+
+    .bronze {
+      background-color: #cd7f32;
+    }
+
+    .person p {
+    width: 3em;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: rgb(40, 40, 40);
+    font-size: 20px;
+}
+    #name {
+      flex: 1;
+    }
+
+    #attendance, #streak {
+    display: flex;
+    flex-direction: row-reverse;
+    } 
+  </style>
+</head>
+<body>
+  <h1>Scoreboard</h1>
+
+  <% 
+  let previousStreak = null;
+  let previousClass = 'gold';
+
+  allPersonData.forEach((person, index) => {
+    const currentStreak = person.streak;
+    const currentClass = (index === 0 || currentStreak === previousStreak) ? previousClass : (previousClass === 'gold' ? 'silver' : previousClass === 'silver' ? 'bronze' : '');
+
+    %>
+    <div class="person <%= currentClass %>">
+      <img src="<%= person.avatar %>" alt="Avatar">
+      <p id="name"><%= person.first_name %> <%= person.last_name %></p>
+      <p id="streak"><%= person.streak %>🔥</p>
+      <p id="attendance"><%= person.attendance %>📈</p>
+    </div>
+    <% 
+
+    previousStreak = currentStreak;
+    previousClass = currentClass;
+  }); 
+  %>
+</body>
+</html>
